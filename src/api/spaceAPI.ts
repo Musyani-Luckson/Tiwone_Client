@@ -1,7 +1,7 @@
 import type { PropertyItem } from "../types/space";
 import type { SearchRequest } from "../types/search";
 import api from "./index";
-import type { PropertyUpdateInterface } from "../features/listing/updateSpace";
+// import type { PropertyUpdateInterface } from "../features/listing/updateSpace";
 
 export const searchSpaces = async (
   searchInput: SearchRequest,
@@ -62,7 +62,7 @@ export const getMySpacesAPI = async (): Promise<{
 // UPDATE
 export const updateSpaceAPI = async (
   id: number | string,
-  space: Partial<PropertyUpdateInterface>
+  space: Partial<any>
 ): Promise<{ success: boolean; message: string; data: PropertyItem }> => {
   try {
     const response = await api.patch(`/api/space/${id}`, space);

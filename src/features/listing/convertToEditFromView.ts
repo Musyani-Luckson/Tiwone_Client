@@ -5,7 +5,7 @@ export function mapSpaceToFormState(space: any): SpaceFormState {
     name: space.name || "",
     space_type: space.space_type || "",
     deal_type: space.deal_type || "",
-    status: space.status || "PENDING",
+    status: space.status || "AVAILABLE",
 
     price: {
       price_amount: parseFloat(space.price_amount) || 0.0,
@@ -17,7 +17,7 @@ export function mapSpaceToFormState(space: any): SpaceFormState {
     address: {
       street: space.Address?.street || "",
       city: space.Address?.city || "",
-      province: space.Address?.province || "",
+      province: space.Address?.province || "Copperbelt",
       postalCode: space.Address?.postal_code || "",
       country: space.Address?.country || "Zambia",
     },
@@ -32,18 +32,15 @@ export function mapSpaceToFormState(space: any): SpaceFormState {
 
     space_profile: {
       description: space.SpaceProfile?.description || "",
-      photos: space.SpaceProfile?.Photos?.map((p: any) => p.photo_url) || [],
-      features:
-        space.SpaceProfile?.Features?.map((f: any) => f.feature_name) || [],
-      nearby_features:
-        space.SpaceProfile?.NearbyFeatures?.map((f: any) => f.feature_name) ||
-        [],
-      agent: {
-        first_name: space.SpaceProfile?.Agent?.first_name || "",
-        last_name: space.SpaceProfile?.Agent?.last_name || "",
-        phone: space.SpaceProfile?.Agent?.phone || "",
-        email: space.SpaceProfile?.Agent?.email || "",
-      },
+      photos: space.SpaceProfile?.photos || [],
+      features: space.SpaceProfile?.features || [],
+      nearby_features: space.SpaceProfile?.nearby_features || [],
+    },
+    contact: {
+      first_name: space.ContactInfo?.first_name || "",
+      last_name: space.ContactInfo?.last_name || "",
+      phone: space.ContactInfo?.phone || "",
+      email: space.ContactInfo?.email || "",
     },
   };
 }
@@ -72,22 +69,22 @@ export function convertFormStateToApiPayload(form: SpaceFormState) {
       point: {
         type: "Point",
         coordinates: [
-          Number(form.location.coordinates.lat) || 0,
-          Number(form.location.coordinates.lng) || 0,
+          Number(form.location.coordinates?.lat) || 0,
+          Number(form.location.coordinates?.lng) || 0,
         ],
       },
     },
     space_profile: {
       description: form.space_profile.description,
-      photos: form.space_profile.photos.map((photo) => ({
-        photo_url: photo,
-      })),
-      features: form.space_profile.features.map((f) => ({
-        feature_name: f,
-      })),
-      nearby_features: form.space_profile.nearby_features.map((nf) => ({
-        feature_name: nf,
-      })),
+      photos: form.space_profile.photos,
+      features: form.space_profile.features,
+      nearby_features: form.space_profile.nearby_features,
+    },
+    contact: {
+      first_name: form.contact.first_name,
+      last_name: form.contact.last_name,
+      phone: form.contact.phone,
+      email: form.contact.email,
     },
   };
 }

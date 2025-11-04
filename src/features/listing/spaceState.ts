@@ -24,9 +24,13 @@ export interface SpaceAddress {
 // Geolocation details
 export interface SpaceLocation {
   name: string;
-  coordinates: {
+  coordinates?: {
     lat: number | string;
     lng: number | string;
+  };
+  point?: {
+    type: string;
+    coordinates: [number, number];
   };
 }
 
@@ -35,13 +39,14 @@ export interface SpaceProfile {
   features: string[];
   nearby_features: string[];
   description: string;
-  photos: string[];
-  agent: {
-    first_name: string;
-    last_name: string;
-    phone: string;
-    email: string;
-  };
+  photos: (string | { file: File; preview: string })[];
+}
+
+export interface Contact {
+  first_name: string;
+  last_name: string;
+  phone: string;
+  email: string;
 }
 
 // Overall form state
@@ -49,11 +54,12 @@ export interface SpaceFormState {
   name: string;
   space_type: SpaceCategory;
   deal_type: DealType;
-  status: "PENDING" | "AVAILABLE" | "OCCUPIED" | "";
+  status: "OCCUPIED" | "AVAILABLE" | "SOLD" | "";
   price: SpacePrice;
   address: SpaceAddress;
   location: SpaceLocation;
   space_profile: SpaceProfile;
+  contact: Contact;
 }
 
 // Default state template for new or editing
@@ -61,7 +67,7 @@ export const defaultSpaceFormState: SpaceFormState = {
   name: "Test Subject",
   space_type: "APARTMENT",
   deal_type: "LEASE",
-  status: "PENDING",
+  status: "AVAILABLE",
   price: {
     price_amount: 0.0,
     price_currency: "ZMW",
@@ -83,15 +89,15 @@ export const defaultSpaceFormState: SpaceFormState = {
     },
   },
   space_profile: {
-    features: [],
-    nearby_features: [],
     description: "",
     photos: [],
-    agent: {
-      first_name: "",
-      last_name: "",
-      phone: "",
-      email: "",
-    },
+    features: [],
+    nearby_features: [],
+  },
+  contact: {
+    first_name: "",
+    last_name: "",
+    phone: "",
+    email: "",
   },
 };

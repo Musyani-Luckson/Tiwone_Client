@@ -4,11 +4,13 @@ import SpaceCard from "../components/SpaceCard";
 import { useSpace } from "../hooks/useSpaceHook";
 import CreateProperty from "../features/listing/CreateProperty";
 import { useEffect } from "react";
-import type { PropertyItem } from "../types/space";
+// import type { PropertyItem } from "../types/space";
+import { DashboardStats } from "../components/DashboardStats";
 
 // Dashboard Component
 function Dashboard() {
   const { spaces, loading, error, readSpaces, deleteSpace } = useSpace();
+  // const [setEditingSpace] = useState<PropertyItem | null>(null);
 
   useEffect(() => {
     readSpaces();
@@ -45,26 +47,35 @@ function Dashboard() {
   }
 
   const handleDelete = async (id: number) => {
-    deleteSpace(id);
-  };
-  const handleEdit = async (space: PropertyItem) => {
-    console.log(space);
+    if (window.confirm("Are you sure you want to delete this property?")) {
+      deleteSpace(id);
+    }
   };
 
-  // Normal state: display spaces in a grid
+  // const handleEdit = (space: PropertyItem) => {
+  //   setEditingSpace(space);
+  // };
+
+  // Normal state: display spaces with stats and grid
   return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 overflow-x-hidden overflow-y-scroll relative">
-      {spaces &&
-        spaces.map((space) => (
-          // <div>{space.name}</div>
-          <SpaceCard
-            onDelete={handleDelete}
-            onEdit={handleEdit}
-            key={space.id}
-            space={space}
-            useCase="owner"
-          />
-        ))}
+    <div className="overflow-y-auto h-full">
+      {/* Dashboard Stats */}
+      <DashboardStats spaces={spaces} />
+
+      {/* Properties Grid */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+        {spaces &&
+          spaces.map((space) => (
+            // <div>{space.name}</div>
+            <SpaceCard
+              onDelete={handleDelete}
+              // onEdit={handleEdit}
+              key={space.id}
+              space={space}
+              useCase="owner"
+            />
+          ))}
+      </div>
 
       {/* Floating Add Property Button */}
       <CreateProperty />

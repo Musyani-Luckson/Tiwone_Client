@@ -23,7 +23,7 @@ type SpaceAction =
   | { type: typeof SET_ERROR; payload: string }
   | { type: typeof SPACE_CREATE; payload: PropertyItem }
   | { type: typeof SPACE_READ; payload: PropertyItem[] }
-  | { type: typeof SPACE_UPDATE; payload: PropertyItem }
+  | { type: typeof SPACE_UPDATE; payload: any }
   | { type: typeof SPACE_DELETE; payload: number };
 
 // Reducer

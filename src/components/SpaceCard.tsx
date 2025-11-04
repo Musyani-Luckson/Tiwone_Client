@@ -1,13 +1,5 @@
 import type { PropertyItem } from "../types/space";
-import {
-  MapPin,
-  // Edit2,
-  Trash2,
-  // Heart,
-  DollarSign,
-  Building2,
-  Clock,
-} from "lucide-react";
+import { MapPin, Trash2, DollarSign, Building2, Clock } from "lucide-react";
 import ImageSlider from "./ImageSlider";
 import CreateProperty from "../features/listing/CreateProperty";
 import ViewFinder from "../features/listing/ViewFinder";
@@ -19,12 +11,7 @@ interface SpaceInterface {
   onEdit?: (space: PropertyItem) => void;
 }
 
-function SpaceCard({
-  space,
-  useCase = "finder",
-  onDelete,
-}: // onEdit,
-SpaceInterface) {
+function SpaceCard({ space, useCase = "finder", onDelete }: SpaceInterface) {
   const {
     id,
     name,
@@ -68,12 +55,8 @@ SpaceInterface) {
     </span>
   );
 
-  const ImageSection = (
-    <ImageSlider
-      images={["./01.jpg", "./02.jpg", "./03.jpg", "./04.jpg"]}
-      className=""
-    />
-  );
+  const imageUrls = space.SpaceProfile?.photos ?? [];
+  const ImageSection = <ImageSlider images={imageUrls} className="" />;
 
   const MetaInfo = (
     <div className="p-3">
@@ -111,9 +94,6 @@ SpaceInterface) {
           {ImageSection}
           {MetaInfo}
           <div className="flex justify-between items-center px-3 py-2 border-t border-gray-100">
-            {/* <button className="flex items-center text-gray-500 hover:text-red-500 transition">
-              <Heart size={16} className="mr-1" /> Save
-            </button> */}
             <ViewFinder space={space} />
             <span className="text-xs text-gray-400 flex items-center">
               <Clock size={12} className="mr-1" />

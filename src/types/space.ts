@@ -1,38 +1,22 @@
-export type Photo = {
-  id: number;
-  space_profile_id: number;
-  photo_url: string;
-  created_at: string;
-  updated_at: string;
-};
-
-export type Feature = {
-  id: number;
-  space_profile_id: number;
-  feature_name: string;
-  created_at: string;
-  updated_at: string;
-};
-
-export type NearbyFeature = {
-  id: number;
-  space_profile_id: number;
-  feature_name: string;
-  created_at: string;
-  updated_at: string;
-};
-
 export type SpaceProfile = {
   id: number;
   space_id: number;
   description: string;
   created_at: string;
   updated_at: string;
-  Photos: Photo[];
-  Features: Feature[];
-  NearbyFeatures: NearbyFeature[];
+  photos: string[];
+  features: string[];
+  nearby_features: string[];
 };
 
+export type Contact = {
+  id?: number;
+  space_id?: number;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  phone?: string;
+};
 export type Address = {
   id: number;
   street: string;
@@ -75,6 +59,7 @@ export type PropertyItem = {
   Address: Address;
   Location: Location;
   SpaceProfile?: SpaceProfile;
+  ContactInfo: Contact;
 };
 
 export interface SpacesState {
@@ -119,14 +104,20 @@ export const priceDurationOptions = [
   { label: "One Time", value: "ONE_TIME" },
 ];
 
-export const priceCurrencyOptions = [
-  { label: "All", value: "" },
-  { label: "Day", value: "DAY" },
-  { label: "Week", value: "WEEK" },
-  { label: "Month", value: "MONTH" },
-  { label: "Year", value: "YEAR" },
-  { label: "One Time", value: "ONE_TIME" },
+export const statusOptions = [
+  { label: "Available", value: "AVAILABLE" },
+  { label: "Occupied", value: "OCCUPIED" },
+  { label: "Sold", value: "SOLD" },
 ];
+
+// export const priceCurrencyOptions = [
+//   { label: "All", value: "" },
+//   { label: "Day", value: "DAY" },
+//   { label: "Week", value: "WEEK" },
+//   { label: "Month", value: "MONTH" },
+//   { label: "Year", value: "YEAR" },
+//   { label: "One Time", value: "ONE_TIME" },
+// ];
 
 export const priceDurationCountOptions = Array.from({ length: 5 }, (_, i) => ({
   label: `${i + 1}`,

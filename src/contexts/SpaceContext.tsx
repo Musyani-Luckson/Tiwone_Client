@@ -18,13 +18,13 @@ import {
   updateSpaceAPI,
 } from "../api/spaceAPI";
 import type { SpaceFormState } from "../features/listing/spaceState";
-import type { PropertyUpdateInterface } from "../features/listing/updateSpace";
+// import type { PropertyUpdateInterface } from "../features/listing/updateSpace";
 
 // Context type
 export interface SpaceContextType extends SpacesState {
   createSpace: (space: SpaceFormState) => void;
   readSpaces: () => void;
-  updateSpace: (id: number | string, space: PropertyUpdateInterface) => void;
+  updateSpace: (id: number | string, space: SpaceFormState) => void;
   deleteSpace: (id: number) => void;
 }
 
@@ -64,7 +64,7 @@ export const SpaceProvider = ({ children }: { children: ReactNode }) => {
 
   // UPDATE
   const updateSpace = useCallback(
-    async (id: number | string, space: PropertyUpdateInterface) => {
+    async (id: number | string, space: SpaceFormState) => {
       dispatch({ type: SET_LOADING });
       try {
         const response = await updateSpaceAPI(id, space);

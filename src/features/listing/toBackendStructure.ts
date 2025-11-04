@@ -12,6 +12,8 @@ export function convertToBackendStructure(frontendData: any) {
     price_duration: frontendData.price_duration,
     price_duration_count: frontendData.price_duration_count,
 
+    contact: frontendData.contact,
+
     address: {
       street: frontendData.address?.street ?? "",
       city: frontendData.address?.city ?? "",
@@ -33,17 +35,9 @@ export function convertToBackendStructure(frontendData: any) {
 
     space_profile: {
       description: frontendData.space_profile?.description ?? "",
-      photos: (frontendData.space_profile?.photos ?? []).map((url: string) => ({
-        photo_url: url,
-      })),
-      // The backend expects a weird hybrid array? If your schema truly expects mixed values, keep this;
-      // otherwise, remove or normalize properly.
+      photos: frontendData.space_profile?.photos ?? [],
       features: frontendData.space_profile?.features ?? [],
-      nearby_features: (frontendData.space_profile?.nearby_features ?? []).map(
-        (feature: string) => ({
-          feature_name: feature,
-        })
-      ),
+      nearby_features: frontendData.space_profile?.nearby_features ?? [],
     },
   };
 }

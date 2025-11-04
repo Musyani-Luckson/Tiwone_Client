@@ -1,20 +1,8 @@
-export type Photo = {
-  photo_url: string;
-};
-
-export type Feature = {
-  feature_name: string;
-};
-
-export type NearbyFeature = {
-  feature_name: string;
-};
-
 export type SpaceProfile = {
   description: string;
-  photos: Photo[];
-  features: Feature[] | string[];
-  nearby_features: NearbyFeature[];
+  photos: string[];
+  features: string[];
+  nearby_features: string[];
 };
 
 export type Address = {
@@ -47,4 +35,5 @@ export interface PropertyUpdateInterface {
   address?: Address;
   location: Location;
   space_profile?: SpaceProfile;
+  contact: any;
 }

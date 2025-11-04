@@ -6,6 +6,7 @@ import type { SpaceFormState } from "./spaceState";
 interface SpaceProfileProps {
   formData: SpaceFormState;
   setFormData: React.Dispatch<React.SetStateAction<SpaceFormState>>;
+  type?: "edit" | "new";
 }
 
 // Mock suggestions (can later be dynamic/AI-driven)
@@ -42,6 +43,7 @@ const generateAIText = (field: string) => {
 const SpaceProfile: React.FC<SpaceProfileProps> = ({
   formData,
   setFormData,
+  // type = "new",
 }) => {
   const { space_profile } = formData;
 
@@ -49,11 +51,6 @@ const SpaceProfile: React.FC<SpaceProfileProps> = ({
     <div className="space-y-8">
       {/* Features */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-800 mb-3">Features</h2>
-        <p className="text-gray-600 text-sm mb-3">
-          Add key features of the space. You can also use AI to auto-generate
-          suggestions.
-        </p>
         <div className="relative">
           <InputField
             name="features"
@@ -131,9 +128,8 @@ const SpaceProfile: React.FC<SpaceProfileProps> = ({
                 ...prev,
                 space_profile: {
                   ...prev.space_profile,
-                  nearbyFeatures: e.target.value
-                    .split(",")
-                    .map((f) => f.trim()),
+                  nearbyFeatures: e.target.value.split(","),
+                  // .map((f) => f.trim()),
                 },
               }))
             }
