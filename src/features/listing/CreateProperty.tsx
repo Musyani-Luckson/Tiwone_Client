@@ -46,17 +46,19 @@ function CreateProperty({ type = "new", space }: CreateSpaceProp) {
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        title={type === "edit" ? "Edit Space" : "New Space"}
+        title={type === "edit" ? "Edit Property" : "Create New Property"}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 h-full w-full">
-          <div className="p-6 h-full w-full rounded-lg text-gray-400 text-sm flex items-center justify-center">
-            <div className="w-50 sm:w-70">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 h-full w-full">
+          {/* Illustration Sidebar - Hidden on mobile */}
+          <div className="hidden lg:flex col-span-2 justify-center items-center bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4">
+            <div className="w-full max-w-xs">
               <Illustrator src={`./${step}List.svg`} />
             </div>
           </div>
 
-          <div className="overflow-auto p-6">
-            <MultiStepForm getStep={setStep} space={space} />
+          {/* Form Content */}
+          <div className="col-span-3 overflow-auto p-4 lg:p-6">
+            <MultiStepForm type={type} getStep={setStep} space={space} />
           </div>
         </div>
       </Modal>

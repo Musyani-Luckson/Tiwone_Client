@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ImageSliderProps {
-  images: string[];
+  images: (string | number)[];
   className?: string;
 }
 
@@ -32,7 +32,11 @@ export default function ImageSlider({
       <AnimatePresence mode="wait">
         <motion.img
           key={images[current]}
-          src={images[current]}
+          src={
+            typeof images[current] === "string"
+              ? images[current]
+              : String(images[current])
+          }
           alt={`Property image ${current + 1}`}
           initial={{ opacity: 0, scale: 1.02 }}
           animate={{ opacity: 1, scale: 1 }}

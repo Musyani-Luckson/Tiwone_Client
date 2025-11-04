@@ -8,6 +8,7 @@ import type { SpaceFormState } from "./spaceState";
 interface LocationProps {
   formData: SpaceFormState;
   setFormData: React.Dispatch<React.SetStateAction<SpaceFormState>>;
+  type?: "edit" | "new";
 }
 
 // 🔹 Async function to reverse geocode coordinates using OpenStreetMap
@@ -25,7 +26,11 @@ async function reverseGeocode(lat: number, lon: number): Promise<string> {
   }
 }
 
-const Location: React.FC<LocationProps> = ({ formData, setFormData }) => {
+const Location: React.FC<LocationProps> = ({
+  formData,
+  setFormData,
+  // type = "new",
+}) => {
   const {
     location: { coordinates },
   } = formData;
@@ -54,19 +59,24 @@ const Location: React.FC<LocationProps> = ({ formData, setFormData }) => {
       ...prev,
       location: {
         ...prev.location,
-        coordinates: { ...prev.location.coordinates, lat: num },
+        coordinates: {
+          lat: num,
+          lng: prev.location.coordinates?.lng ?? 0,
+        },
       },
     }));
     setErrors((prev) => ({ ...prev, lat: validateLatitude(num) }));
   };
-
   const handleLongitudeChange = (value: string) => {
     const num = value === "" ? "" : parseFloat(value);
     setFormData((prev) => ({
       ...prev,
       location: {
         ...prev.location,
-        coordinates: { ...prev.location.coordinates, lng: num },
+        coordinates: {
+          lat: prev.location.coordinates?.lat ?? 0,
+          lng: num,
+        },
       },
     }));
     setErrors((prev) => ({ ...prev, lon: validateLongitude(num) }));
@@ -94,7 +104,7 @@ const Location: React.FC<LocationProps> = ({ formData, setFormData }) => {
 
   // 🔹 Fetch reverse geocode whenever coordinates are valid
   useEffect(() => {
-    const { lat, lng } = formData.location.coordinates;
+    const { lat, lng } = formData.location.coordinates ?? { lat: "", lng: "" };
     if (
       typeof lat === "number" &&
       typeof lng === "number" &&
@@ -111,17 +121,17 @@ const Location: React.FC<LocationProps> = ({ formData, setFormData }) => {
   }, [formData.location.coordinates]);
 
   return (
-    <div className="space-y-6">
-      <div>
+    <div className="">
+      {/* <div>
         <h2 className="text-lg font-semibold text-gray-800 mb-2">Location</h2>
         <p className="text-gray-600 text-sm">
           Pinpoint the space by clicking or dragging the marker on the map. You
           can also manually enter valid latitude and longitude coordinates
           (latitude −90 to +90, longitude −180 to +180).
         </p>
-      </div>
+      </div> */}
 
-      <div className="flex justify-start">
+      <div className="flex justify-start my-4">
         <button
           type="button"
           onClick={handleMyLocation}
@@ -138,13 +148,13 @@ const Location: React.FC<LocationProps> = ({ formData, setFormData }) => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid gap-2 grid-cols-2 sm:gap-4">
         <InputField
           name="latitude"
           placeholder="Latitude (-90 to +90)"
           icon={<Navigation className="w-5 h-5 text-gray-500" />}
           type="number"
-          value={coordinates.lat.toString()}
+          value={(coordinates?.lat ?? 0).toString()}
           onChange={(e) => handleLatitudeChange(e.target.value)}
           error={errors.lat}
         />
@@ -153,13 +163,13 @@ const Location: React.FC<LocationProps> = ({ formData, setFormData }) => {
           placeholder="Longitude (-180 to +180)"
           icon={<Navigation className="w-5 h-5 text-gray-500 rotate-90" />}
           type="number"
-          value={coordinates.lng.toString()}
+          value={(coordinates?.lng ?? 0).toString()}
           onChange={(e) => handleLongitudeChange(e.target.value)}
           error={errors.lon}
         />
       </div>
 
-      <div className="mt-4 text-sm text-gray-700 rounded-lg px-3 py-2">
+      <div className="mt-2 text-sm text-gray-700 rounded-lg px-3 py-1">
         {fetchingAddress ? (
           <span className="text-blue-600">Fetching location details…</span>
         ) : (
@@ -172,15 +182,29 @@ const Location: React.FC<LocationProps> = ({ formData, setFormData }) => {
         )}
       </div>
 
-      <div className="mt-4 h-64 rounded-sm overflow-hidden shadow-sm">
+      <div className="mt-1 h-60 rounded-lg overflow-hidden shadow-sm">
         <ListingMap
-          latitude={coordinates.lat}
-          longitude={coordinates.lng}
+          latitude={coordinates?.lat ?? 0}
+          longitude={coordinates?.lng ?? 0}
           onCoordinateChange={(lat, lon) => {
             handleLatitudeChange(lat.toString());
             handleLongitudeChange(lon.toString());
           }}
         />
+        <button
+          type="button"
+          onClick={handleMyLocation}
+          className={`flex items-center gap-2 px-4 py-3 rounded-sm text-white transition-all duration-200 ${
+            loading
+              ? "bg-blue-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          }`}
+          disabled={loading}
+          aria-label="Detect and Autofill Current Location"
+        >
+          <MapPin className="w-5 h-5" />
+          {loading ? "Detecting..." : "Use My Location"}
+        </button>
       </div>
     </div>
   );

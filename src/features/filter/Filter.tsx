@@ -28,8 +28,9 @@ function Filter() {
   >("PUBLIC");
 
   useEffect(() => {
+    const status = false;
     if (isAuthenticated) {
-      if (user && user?.subscriptions.length > 0) {
+      if (user && status) {
         setUserStatus("PAID");
       } else {
         setUserStatus("ONBOARD_FREE");

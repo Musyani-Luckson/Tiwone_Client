@@ -6,24 +6,19 @@ import type { SpaceFormState } from "./spaceState";
 interface AddressAndLocationProps {
   formData: SpaceFormState;
   setFormData: React.Dispatch<React.SetStateAction<SpaceFormState>>;
+  type?: "edit" | "new";
 }
 
 const AddressAndLocation: React.FC<AddressAndLocationProps> = ({
   formData,
   setFormData,
+  // type = "new",
 }) => {
   const { address } = formData;
 
   return (
-    <div className="flex flex-col gap-5">
-      <h2 className="text-lg font-semibold text-gray-800 mb-3">
-        Address Details
-      </h2>
-      <p className="text-sm text-gray-500 mb-2">
-        Enter the full address details of the space.
-      </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="flex flex-col">
+      <div className="">
         <InputField
           name="street"
           placeholder="Street address"
