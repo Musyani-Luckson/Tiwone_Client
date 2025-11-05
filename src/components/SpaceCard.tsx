@@ -2,7 +2,7 @@ import type { PropertyItem } from "../types/space";
 import { MapPin, Trash2, DollarSign, Building2, Clock } from "lucide-react";
 import ImageSlider from "./ImageSlider";
 import CreateProperty from "../features/listing/CreateProperty";
-import ViewFinder from "../features/listing/ViewFinder";
+// import ViewFinder from "../features/listing/ViewFinder";
 
 interface SpaceInterface {
   space: PropertyItem;
@@ -94,7 +94,7 @@ function SpaceCard({ space, useCase = "finder", onDelete }: SpaceInterface) {
           {ImageSection}
           {MetaInfo}
           <div className="flex justify-between items-center px-3 py-2 border-t border-gray-100">
-            <ViewFinder space={space} />
+            {/* <ViewFinder space={space} /> */}
             <span className="text-xs text-gray-400 flex items-center">
               <Clock size={12} className="mr-1" />
               {new Date(created_at || "").toLocaleDateString()}

@@ -4,13 +4,11 @@ import SpaceCard from "../components/SpaceCard";
 import { useSpace } from "../hooks/useSpaceHook";
 import CreateProperty from "../features/listing/CreateProperty";
 import { useEffect } from "react";
-// import type { PropertyItem } from "../types/space";
 import { DashboardStats } from "../components/DashboardStats";
 
 // Dashboard Component
 function Dashboard() {
   const { spaces, loading, error, readSpaces, deleteSpace } = useSpace();
-  // const [setEditingSpace] = useState<PropertyItem | null>(null);
 
   useEffect(() => {
     readSpaces();
@@ -52,10 +50,6 @@ function Dashboard() {
     }
   };
 
-  // const handleEdit = (space: PropertyItem) => {
-  //   setEditingSpace(space);
-  // };
-
   // Normal state: display spaces with stats and grid
   return (
     <div className="overflow-y-auto h-full">
@@ -66,10 +60,8 @@ function Dashboard() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
         {spaces &&
           spaces.map((space) => (
-            // <div>{space.name}</div>
             <SpaceCard
               onDelete={handleDelete}
-              // onEdit={handleEdit}
               key={space.id}
               space={space}
               useCase="owner"
