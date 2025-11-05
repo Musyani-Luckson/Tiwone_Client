@@ -47,44 +47,44 @@ export function mapSpaceToFormState(space: any): SpaceFormState {
 
 //
 
-export function convertFormStateToApiPayload(form: SpaceFormState) {
-  return {
-    name: form.name,
-    space_type: form.space_type,
-    deal_type: form.deal_type,
-    status: form.status,
-    price_amount: form.price.price_amount.toString(),
-    price_currency: form.price.price_currency,
-    price_duration: form.price.price_duration,
-    price_duration_count: form.price.price_duration_count,
-    address: {
-      street: form.address.street,
-      city: form.address.city,
-      province: form.address.province,
-      postal_code: form.address.postalCode, // map to backend key
-      country: form.address.country,
-    },
-    location: {
-      name: form.location.name,
-      point: {
-        type: "Point",
-        coordinates: [
-          Number(form.location.coordinates?.lat) || 0,
-          Number(form.location.coordinates?.lng) || 0,
-        ],
-      },
-    },
-    space_profile: {
-      description: form.space_profile.description,
-      photos: form.space_profile.photos,
-      features: form.space_profile.features,
-      nearby_features: form.space_profile.nearby_features,
-    },
-    contact: {
-      first_name: form.contact.first_name,
-      last_name: form.contact.last_name,
-      phone: form.contact.phone,
-      email: form.contact.email,
-    },
-  };
-}
+// export function convertFormStateToApiPayload(form: SpaceFormState) {
+//   return {
+//     name: form.name,
+//     space_type: form.space_type,
+//     deal_type: form.deal_type,
+//     status: form.status,
+//     price_amount: form.price.price_amount.toString(),
+//     price_currency: form.price.price_currency,
+//     price_duration: form.price.price_duration,
+//     price_duration_count: form.price.price_duration_count,
+//     address: {
+//       street: form.address.street,
+//       city: form.address.city,
+//       province: form.address.province,
+//       postal_code: form.address.postalCode, // map to backend key
+//       country: form.address.country,
+//     },
+//     location: {
+//       name: form.location.name,
+//       point: {
+//         type: "Point",
+//         coordinates: [
+//           Number(form.location.coordinates?.lat) || 0,
+//           Number(form.location.coordinates?.lng) || 0,
+//         ],
+//       },
+//     },
+//     space_profile: {
+//       description: form.space_profile.description,
+//       photos: form.space_profile.photos,
+//       features: form.space_profile.features,
+//       nearby_features: form.space_profile.nearby_features,
+//     },
+//     contact: {
+//       first_name: form.contact.first_name,
+//       last_name: form.contact.last_name,
+//       phone: form.contact.phone,
+//       email: form.contact.email,
+//     },
+//   };
+// }

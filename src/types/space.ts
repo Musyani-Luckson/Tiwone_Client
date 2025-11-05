@@ -110,15 +110,6 @@ export const statusOptions = [
   { label: "Sold", value: "SOLD" },
 ];
 
-// export const priceCurrencyOptions = [
-//   { label: "All", value: "" },
-//   { label: "Day", value: "DAY" },
-//   { label: "Week", value: "WEEK" },
-//   { label: "Month", value: "MONTH" },
-//   { label: "Year", value: "YEAR" },
-//   { label: "One Time", value: "ONE_TIME" },
-// ];
-
 export const priceDurationCountOptions = Array.from({ length: 5 }, (_, i) => ({
   label: `${i + 1}`,
   value: `${i + 1}`,
